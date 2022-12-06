@@ -1,0 +1,53 @@
+.root{
+    background-image: url('/public/img/background-welcome.png');
+    background-size: cover;
+    height: 100vh;
+}
+
+.root > div:first-child {
+    padding: 1rem;
+}
+
+.root > div:nth-child(2) {
+    text-align: center;
+    margin-top: 3.1rem;    
+}
+
+.root > div:nth-child(2) > h1 {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+
+.root > div:nth-child(2) > h1 > span {
+    color: var(--red);
+}
+
+.root > div:nth-child(3) {
+    margin: 9.6rem 4.125rem 0 4.125rem;
+}
+
+.root > div:nth-child(3) > .button:first-of-type {
+    margin-bottom: 1rem;
+}
+
+.root > div:nth-child(3) > .button:last-of-type {
+    color: var(--red);
+    background-color: transparent;
+    border: 2px solid var(--red);
+}
+
+.root > div:nth-child(3) > .button:last-of-type:hover {
+    color: var(--white);
+    background-color: var(--red);
+    border: none;
+}
+
+.root > div:last-child {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 1rem;
+    color: var(--white);
+    font-size: 0.75rem;
+}

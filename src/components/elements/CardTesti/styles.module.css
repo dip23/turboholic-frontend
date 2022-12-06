@@ -1,0 +1,42 @@
+.root {
+  border-radius: 0.625rem;
+  background-color: var(--white);
+  padding: 1rem;
+}
+
+.root > div {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.root > div > img {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.root > div > div > p {
+  text-align: left;
+}
+
+.root > div > div > p:first-child {
+  font-size: 0.875rem;
+  color: var(--black-default);
+  font-weight: 700;
+}
+
+.root > div > div > p:last-child {
+  font-size: 0.625rem;
+  color: #888888;
+}
+
+.root > p {
+  color: var(--text-grey);
+  max-height: 5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

@@ -1,0 +1,31 @@
+.root {
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+
+span {
+  color: var(--red);
+}
+
+.root > h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--black-default);
+  margin-bottom: 1rem;
+}
+
+.root > hr {
+  width: 5.5rem;
+  border: 1px solid var(--red);
+  margin: auto;
+}
+
+.root > img {
+  margin-top: 1.5rem;
+}
+
+.root > p {
+  font-size: 0.875rem;
+  color: var(--text-grey);
+  margin-top: 1rem;
+}

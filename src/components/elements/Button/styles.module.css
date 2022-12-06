@@ -1,0 +1,10 @@
+.root {
+  width: 100%;
+  border: none;
+  padding: 1rem;
+  background-color: var(--red);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--white);
+  border-radius: 0.625rem;
+}
