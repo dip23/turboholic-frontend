@@ -8,7 +8,6 @@ import { dataTesti as data } from './dataTesti';
 
 export default function SectionTesti() {
   const settings = {
-    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,

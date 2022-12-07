@@ -3,7 +3,7 @@
   padding: 2rem;
   background-image: url('/public/img/background-test.png');
   background-size: cover;
-  height: 100vh;
+  height: max-content;
 }
 
 .root > h1 {

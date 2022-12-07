@@ -9,13 +9,13 @@ export const dataTesti = [
     name: 'ADVENT TELAUMBANUA',
     photo: 'https://turboholic.online/wp-content/uploads/2022/10/advent.jpg',
     job: 'Karyawan Swasta',
-    desc: "Setelah menggunakan produk Pertamax suara mesin motor saya lebih halus, lebih irit dan jarak tempuh Pertamax lebih jauh. Yang saya rasakan biasanya saya pulang pergi kantor selama 1 minggu menggunakan pertalite Rp 60.000,- setelah menggunakakan Pertamax hanya Rp 55.000,- jauh lebih irit dengan jarak tempuh yang lebih jauh. Harapan saya kedepan Program TURBO HOLIC tetap eksis untuk memberikan apresiasi bagi kita pengguna loyal produk pertamina TURBO HOLIC mantap."
+    desc: "Setelah menggunakan produk Pertamax suara mesin motor saya lebih halus, lebih irit dan jarak tempuh Pertamax lebih jauh. Yang saya rasakan biasanya saya pulang pergi kantor selama 1 minggu menggunakan pertalite Rp 60.000,- setelah menggunakakan Pertamax hanya Rp 55.000,- jauh lebih irit dengan jarak tempuh yang lebih jauh."
   },
   {
     name: 'HADI TANJUNG',
     photo: 'https://turboholic.online/wp-content/uploads/2022/10/o1.png',
     job: 'Kordinator Operasional PT Trans Continent',
-    desc: "Setelah menggunakan produk Pertamax suara mesin motor saya lebih halus, lebih irit dan jarak tempuh Pertamax lebih jauh. Yang saya rasakan biasanya saya pulang pergi kantor selama 1 minggu menggunakan pertalite Rp 60.000,- setelah menggunakakan Pertamax hanya Rp 55.000,- jauh lebih irit dengan jarak tempuh yang lebih jauh. Harapan saya kedepan Program TURBO HOLIC tetap eksis untuk memberikan apresiasi bagi kita pengguna loyal produk pertamina TURBO HOLIC mantap."
+    desc: "Saya ucapkan terimakasih sebesar-besarnya kepada PT Pertamina Patra Niaga Sales Area Retail Sibolga atas apresiasi yang diberikan kepada PT Trans Continent Sibolga dalam hal perusahaan terloyal dalam pemakaian penggunaan BBM Jenis Pertamina Dex, Program TURBO HOLIC Mantap."
   },
   {
     name: 'IGNATIUS PRATAMA GUNADHARMA',

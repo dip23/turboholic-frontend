@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionAbout from '../../components/fragments/SectionAbout/SectionAbout';
 import SectionHero from '../../components/fragments/SectionHero';
+import SectionProduct from '../../components/fragments/SectionProduct';
 import SectionTesti from '../../components/fragments/SectionTesti';
 import style from './styles.module.css';
 
@@ -10,6 +11,7 @@ export default function WelcomePage() {
       <SectionHero/>
       <SectionAbout/>
       <SectionTesti/>
+      <SectionProduct/>
     </div>
   )
 }

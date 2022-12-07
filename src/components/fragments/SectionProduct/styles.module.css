@@ -1,0 +1,24 @@
+.root {
+  padding: 2rem;
+  text-align: center;
+  padding-bottom: 4rem;
+}
+
+.root > h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--black-default);
+  margin-bottom: 1.5rem;
+}
+
+.logo {
+  border-radius: 0.625rem;
+  /* background-color: var(--white); */
+  padding: 1.375rem 0;
+  /* margin: 0 2rem; */
+  width: fit-content;
+}
+
+.logo > img {
+  margin: auto;
+}

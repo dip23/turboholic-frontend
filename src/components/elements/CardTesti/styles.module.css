@@ -2,6 +2,7 @@
   border-radius: 0.625rem;
   background-color: var(--white);
   padding: 1rem;
+  height: 16rem;
 }
 
 .root > div {
@@ -34,8 +35,9 @@
 }
 
 .root > p {
+  font-size: 0.75rem;
   color: var(--text-grey);
-  max-height: 5rem;
+  height: 16rem;
   overflow: hidden;
   text-overflow: ellipsis;
 }
