@@ -1,0 +1,18 @@
+.root>label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.root>input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #c9c9c9;
+  font-size: 0.75rem;
+}
+
+.root>p {
+  color: #d80303;
+}

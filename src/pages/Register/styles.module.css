@@ -1,0 +1,28 @@
+.root{
+  max-width: 600px;
+  margin: auto;
+  height: max-content;
+  background-image: url('/public/img/background-welcome.png');
+  background-size: cover;
+  padding: 3.375rem;
+}
+
+.root > h1 {
+  color: var(--white);
+  text-align: center;
+  font-size: 2.25rem;
+  margin-bottom: 3rem;
+}
+
+.root > button {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.root > button > div {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,12 @@
+.root > div {
+  margin-bottom: 1rem;
+}
+
+.root > div > label {
+  color: var(--white);
+}
+
+.loginButton {
+  margin-top: 1.5rem;
+  background-color: var(--blue);
+}

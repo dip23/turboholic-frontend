@@ -9,10 +9,6 @@ import { useNavigate } from 'react-router-dom';
 export default function SectionHero() {
   const navigate = useNavigate();
 
-  const clickRegist = () => {
-    navigate('/register');
-  }
-
   return (
     <section className={style.root}>
         <div>
@@ -20,8 +16,8 @@ export default function SectionHero() {
         </div>
         <div><h1>Turbo<span>Holic.</span></h1></div>
         <div>
-          <Button className={style.button} onClick={clickRegist}>Bergabung</Button>
-          <Button className={style.button}>Masuk</Button>
+          <Button className={style.button} onClick={()=>navigate('/register')}>Bergabung</Button>
+          <Button className={style.button} onClick={()=>navigate('/login')}>Masuk</Button>
         </div>
         <div>
           <p>See More</p>
