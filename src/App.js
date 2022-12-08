@@ -9,6 +9,7 @@ import {
 const WelcomePage = React.lazy(() => import('./pages/WelcomePage'));
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Login = React.lazy(() => import('./pages/Login'));
+const LoginPertamina = React.lazy(() => import('./pages/LoginMyPertamina'));
 const Register = React.lazy(() => import('./pages/Register'));
 
 
@@ -20,6 +21,7 @@ function App() {
           <Route element={<WelcomePage/>} exact path={'/'}/>
           <Route element={<Dashboard/>} exact path={'/dashboard'}/>
           <Route element={<Login/>} exact path={'/login'}/>
+          <Route element={<LoginPertamina/>} exact path={'/loginpertamina'}/>
           <Route element={<Register/>} exact path={'/register'}/>
         </Routes>
       </Router>

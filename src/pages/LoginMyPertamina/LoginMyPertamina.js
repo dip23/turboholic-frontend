@@ -1,11 +1,10 @@
 import React from 'react';
-import Button from '../../components/elements/Button';
 import myPertamina from '../../assets/logo-mypertamina.svg';
 import FormLogin from '../../components/forms/FormLogin';
 import { useNavigate } from 'react-router-dom';
 import style from './styles.module.css';
 
-export default function Login() {
+export default function LoginMyPertamina() {
   const navigate = useNavigate();
 
   const submitForm = () => {
@@ -14,13 +13,10 @@ export default function Login() {
 
   return (
     <section className={style.root}>
+      <div>
+        <img alt='mypertamina' src={myPertamina}/>
+      </div>
       <h1>Sign In</h1>
-      <Button onClick={()=>navigate('/loginpertamina')}>
-        <div>
-          <p>Masuk dengan</p>
-          <img alt='mypertamina' src={myPertamina}/>
-        </div>
-      </Button>
       <FormLogin handleSubmitForm={submitForm}/>
     </section>
   )

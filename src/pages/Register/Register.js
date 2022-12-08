@@ -15,7 +15,7 @@ export default function Register() {
   return (
     <section className={style.root}>
       <h1>Register</h1>
-      <Button>
+      <Button onClick={()=>navigate('/loginpertamina')}>
         <div>
           <p>Masuk dengan</p>
           <img alt='mypertamina' src={myPertamina}/>

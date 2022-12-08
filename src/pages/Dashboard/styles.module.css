@@ -1,0 +1,10 @@
+.root {
+  max-width: 600px;
+  margin: auto;
+  padding: 1.5rem;
+}
+
+.root > div {
+  display: flex;
+  justify-content: space-between;
+}
