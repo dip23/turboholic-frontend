@@ -19,8 +19,8 @@ export default function SectionProduct() {
     <section className={style.root}>
       <h1>Our Product</h1>
       <Slider {...settings}>
-        {image && image.map(el => (
-          <div className={style.logo}>
+        {image && image.map((el, idx) => (
+          <div className={style.logo} key={idx}>
             <img alt='logo' src={process.env.PUBLIC_URL + `/img/logo-${el}.svg`}/>
           </div>
         ))}
