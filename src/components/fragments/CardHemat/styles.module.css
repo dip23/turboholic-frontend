@@ -1,0 +1,35 @@
+.root {
+  background-color: var(--white);
+  padding: 0.625rem 1.125rem;
+  border-radius: 0.5rem;
+}
+
+.root > p {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--black-default);
+}
+
+.root > div{
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.root > div > p {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 2.5rem;
+  color: var(--black-default);
+}
+
+.root > div > div > p:first-of-type{
+  font-size: 0.625rem;
+  letter-spacing: 0.065em;
+}
+
+.root > div > div > p:last-of-type {
+  font-size: 0.875rem;
+  color: #04B900;
+}

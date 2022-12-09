@@ -11,6 +11,8 @@ import { UserContext } from '../../context/UserContext';
 import vehicle from '../../api/Vehicle';
 import Alert from '../../components/elements/Alert';
 import axios from 'axios';
+import CardHemat from '../../components/fragments/CardHemat';
+import CardSummary from '../../components/fragments/CardSummary';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -95,6 +97,10 @@ export default function Dashboard() {
         </div>
         <FontAwesomeIcon onClick={logout} icon={faSignOut}/>
       </div>
+      <CardHemat/>
+      <CardSummary/>
+      <Button>Update Data Pengisian</Button>
+      <Button>Update Tanggal Service</Button>
       <Modal
         show={modalTambahKendaraan} 
         title="Tambah Kendaraan"

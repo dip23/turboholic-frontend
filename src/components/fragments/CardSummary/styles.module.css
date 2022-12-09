@@ -1,0 +1,42 @@
+.root {
+  background-color: var(--white);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.root > div {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #E2E2E2;
+  text-align: center;
+  width: 100%;
+}
+
+.root > div > p {
+  font-size: 0.625rem;
+  color: var(--black-default);
+  margin-bottom: 0.5rem; 
+}
+
+.root > div > div {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.25rem;
+  margin: auto;
+  width: fit-content;
+}
+
+.root > div > div > p:first-of-type {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 700;
+  color: var(--black-default);
+}
+
+.root > div > div > p:last-of-type {
+  font-size: 0.625rem;
+  color: var(--black-default);
+}

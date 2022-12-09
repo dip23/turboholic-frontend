@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+import style from './styles.module.css';
 
 export default function CardHemat() {
   return (
-    <div>
+    <div className={style.root}>
       <p>Anda Sudah Menghemat</p>
       <div>
         <p>100 L</p>
