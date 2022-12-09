@@ -24,9 +24,13 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState({});
 
+  console.log(user);
+  
   const fetchData = async () => {
-    const res = await axios.get('https://turboholic.adaptable.app/vehicle', {
-      headers: { Authorization: `Bearer ${user?.token}` }
+    const res = await vehicle.getAllVehicle({
+      headers: {
+        Authorization: `Bearer ${user?.token}`
+      }
     });
     setKendaraan(res.data.content.vehicles)
   }
@@ -58,7 +62,12 @@ export default function Dashboard() {
 
     try {
       setLoading(true);
-      const res = await vehicle.addVehicle(params);
+      const res = await vehicle.addVehicle(params, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${user?.token}`
+        }
+      });
       if(res.status === 200){
         setModalTambahKendaraan(false)
         setLoading(false);

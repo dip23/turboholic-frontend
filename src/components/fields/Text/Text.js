@@ -11,8 +11,6 @@ export default function Text(props) {
     name,
     error,
     additionalDesc,
-    onChange,
-    value
   } = props;
 
   const classes = [styles.root, className].filter(Boolean).join(' ');
@@ -23,7 +21,7 @@ export default function Text(props) {
         <label htmlFor={label}>{label}</label>
       )}
       <div>
-        <input {...register(name)} onChange={onChange} value={value} {...inputProps} disabled={disabled} />
+        <input {...register(name)} {...inputProps} disabled={disabled} />
         {additionalDesc && <p>{additionalDesc}</p>}
       </div>
       {error && (

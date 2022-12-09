@@ -1,26 +1,20 @@
 import Api from "./api";
 
-const config = {
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-  }
-}
-
 const vehicle = {
-  getAllVehicle() {
-    return Api.get(`/vehicle`);
+  getAllVehicle(config) {
+    return Api.get(`/vehicle`, config);
   },
-  addVehicle(data) {
+  addVehicle(data, config) {
     return Api.post(`/vehicle/add`, data, config);
   },
-  getAllFuel() {
-    return Api.get(`/fuel`);
+  getAllFuel(config) {
+    return Api.get(`/fuel`, config);
   },
-  getFuelById(id) {
-    return Api.get(`/fuel/${id}`);
+  getFuelById(id, config) {
+    return Api.get(`/fuel/${id}`, config);
   },
-  getAllEngine() {
-    return Api.get(`/engine`);
+  getAllEngine(config) {
+    return Api.get(`/engine`, config);
   }
 };
 
