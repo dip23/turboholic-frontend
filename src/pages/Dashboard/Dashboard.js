@@ -10,6 +10,7 @@ import ListKendaraan from '../../components/fragments/ListKendaraan';
 import { UserContext } from '../../context/UserContext';
 import vehicle from '../../api/Vehicle';
 import Alert from '../../components/elements/Alert';
+import axios from 'axios';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -22,13 +23,15 @@ export default function Dashboard() {
   const [selectedVehicle, setSelectedVehicle] = useState({});
 
   const fetchData = async () => {
-    const res = await vehicle.getAllVehicle();
+    const res = await axios.get('https://turboholic.adaptable.app/vehicle', {
+      headers: { Authorization: `Bearer ${user?.token}` }
+    });
     setKendaraan(res.data.content.vehicles)
   }
 
   useEffect(() => {
     fetchData();
-  }, [user])
+  }, [])
 
   const clearStorage = () => {
     return localStorage.removeItem('user');
