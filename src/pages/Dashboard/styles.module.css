@@ -2,6 +2,8 @@
   max-width: 600px;
   margin: auto;
   padding: 1.5rem;
+  background-color: var(--background-grey);
+  min-height: 100vh;
 }
 
 .root > .header {

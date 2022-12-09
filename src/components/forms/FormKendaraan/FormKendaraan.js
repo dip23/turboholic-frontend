@@ -17,6 +17,7 @@ export default function FormKendaraan({handleSubmitForm, isLoading,}) {
   const [engineType, setEngineType] = useState([]);
   const [fuelType, setFuelType] = useState([]);
   const [selectEngine, setSelectEngine] = useState(1);
+  const [value, setValue] = useState(0);
 
   const engineData = async () => {
     const res = await vehicle.getAllEngine();
@@ -36,6 +37,14 @@ export default function FormKendaraan({handleSubmitForm, isLoading,}) {
     fuelData(selectEngine)
   }, [selectEngine])
   
+  const addCommas = (num) =>
+    num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  const removeNonNumeric = (num) => num.toString().replace(/[^0-9]/g, "");
+
+  const handleSeparator = (e) => {
+    setValue(addCommas(removeNonNumeric(e.target.value)));
+  }
+
   const inputProps = [
     {type: "text", placeholder: "D1231XX"},
     {type: "text", placeholder: "Avanza"},
@@ -44,7 +53,7 @@ export default function FormKendaraan({handleSubmitForm, isLoading,}) {
     {type: "number", placeholder: "11"},
     {type: "number", placeholder: "1"},
     {type: "number", placeholder: "1"},
-    {type: "number", placeholder: "100.000"},
+    {type: "text", placeholder: "100.000", maxLength: 7},
   ];
 
   const buttonProps = {
@@ -120,8 +129,10 @@ export default function FormKendaraan({handleSubmitForm, isLoading,}) {
       <Text
         label="Angka Odometer"
         name="initialOdo"
-        inputProps={inputProps[6]}
+        inputProps={inputProps[7]}
         register={register}
+        value={value}
+        onChange={handleSeparator}
         error={errors?.initialOdo?.message}
       />
       <Button 

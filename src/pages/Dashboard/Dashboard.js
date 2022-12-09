@@ -52,7 +52,7 @@ export default function Dashboard() {
     params.append('maxFuelCapacity', data?.tankCapacity);
     params.append('maxFuelGauge', data?.barTotal);
     params.append('initialFuelGauge', data?.initialBar);
-    params.append('initialOdometer', data?.initialOdo);
+    params.append('initialOdometer', Number(data?.initialOdo.replace('.','')));
 
     try {
       setLoading(true);
@@ -74,8 +74,6 @@ export default function Dashboard() {
     setSelectedVehicle(e);
     setModalPilih(false)
   }
-
-  console.log(kendaraan.length)
 
   return (
     <section className={style.root}>
