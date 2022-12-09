@@ -5,23 +5,12 @@
   margin-bottom: 0.25rem;
 }
 
-.root > div {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-.root>div>input {
+.root>select {
   width: 100%;
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #c9c9c9;
   font-size: 0.75rem;
-}
-
-.root>div>p{
-  font-size: 0.75rem;
-  font-weight: 700;
 }
 
 .root>p {

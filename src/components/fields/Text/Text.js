@@ -9,7 +9,8 @@ export default function Text(props) {
     className,
     register,
     name,
-    error
+    error,
+    additionalDesc
   } = props;
 
   const classes = [styles.root, className].filter(Boolean).join(' ');
@@ -19,7 +20,10 @@ export default function Text(props) {
       {label && (
         <label htmlFor={label}>{label}</label>
       )}
-      <input {...inputProps} disabled={disabled} {...register(name)} />
+      <div>
+        <input {...inputProps} disabled={disabled} {...register(name)} />
+        {additionalDesc && <p>{additionalDesc}</p>}
+      </div>
       {error && (
         <p>{error}</p>
       )}

@@ -1,0 +1,18 @@
+.root > div {
+  margin-bottom: 1rem;
+}
+
+.root > div label {
+  font-size: 0.75rem;
+}
+
+.root > .fuelGroup {
+  display: flex;
+  gap: 2rem;
+}
+
+.submitButton {
+  margin-top: 1rem;
+  background-color: var(--blue);
+  font-size: 0.75rem;
+}
