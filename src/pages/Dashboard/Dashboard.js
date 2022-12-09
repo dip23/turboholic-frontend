@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -8,28 +8,81 @@ import Modal from '../../components/elements/Modal';
 import FormKendaraan from '../../components/forms/FormKendaraan';
 import ListKendaraan from '../../components/fragments/ListKendaraan';
 import { UserContext } from '../../context/UserContext';
+import vehicle from '../../api/Vehicle';
+import Alert from '../../components/elements/Alert';
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [modalTambahKendaraan, setModalTambahKendaraan] = useState(false);
   const [modalPilih, setModalPilih] = useState(false);
+  const [kendaraan, setKendaraan] = useState([]);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [selectedVehicle, setSelectedVehicle] = useState({});
 
-  const kendaraan = [];
+  const fetchData = async () => {
+    const res = await vehicle.getAllVehicle();
+    setKendaraan(res.data.content.vehicles)
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [user])
+
+  const clearStorage = () => {
+    return localStorage.removeItem('user');
+  }
 
   const logout = () => {
     setUser(null);
+    clearStorage();
     navigate('/');
   }
+
+  const handleAddVehicle = async (data) => {
+    const params = new URLSearchParams();
+    params.append('licensePlate', data?.plateNum);
+    params.append('brand', data?.vehicleBrand);
+    params.append('engineTypeId', data?.engineType);
+    params.append('initialFuelTypeId', data?.fuelType);
+    params.append('maxFuelCapacity', data?.tankCapacity);
+    params.append('maxFuelGauge', data?.barTotal);
+    params.append('initialFuelGauge', data?.initialBar);
+    params.append('initialOdometer', data?.initialOdo);
+
+    try {
+      setLoading(true);
+      const res = await vehicle.addVehicle(params);
+      if(res.status === 200){
+        setModalTambahKendaraan(false)
+        setLoading(false);
+        fetchData();
+      }
+    } catch (error) {
+      if(error.response.status === 401){
+        setAlertMessage('Periksa kembali data anda.')
+      }
+      setLoading(false)
+    }
+  };
+
+  const choosedVehicle = (e) =>{
+    setSelectedVehicle(e);
+    setModalPilih(false)
+  }
+
+  console.log(kendaraan.length)
 
   return (
     <section className={style.root}>
       <div className={style.header}>
         <div>
           <p>Hi, {user?.name}!</p>
-          {kendaraan?.length === 0 ? (
+          {kendaraan?.length !== 0 ? (
             <div className={style.change}>
-              <p>D 1616 AB - Avanza</p>
+              <p>{selectedVehicle?.licensePlate || kendaraan[0]?.licensePlate} 
+                - {selectedVehicle?.brand || kendaraan[0]?.brand}</p>
               <Button onClick={()=>setModalPilih(true)}>Ganti</Button>
             </div>
           ) : (
@@ -46,7 +99,8 @@ export default function Dashboard() {
         title="Tambah Kendaraan"
         onClose={()=>setModalTambahKendaraan(false)}
       >
-        <FormKendaraan handleSubmitForm={()=>setModalTambahKendaraan(false)}/>
+        {alertMessage && <Alert message={alertMessage}/>}
+        <FormKendaraan handleSubmitForm={handleAddVehicle} isLoading={loading}/>
       </Modal>
       <Modal
         show={modalPilih} 
@@ -54,11 +108,12 @@ export default function Dashboard() {
         onClose={()=>setModalPilih(false)}
       >
         <ListKendaraan
-          handleChoose={()=>setModalPilih(false)}
+          handleChoose={choosedVehicle}
           handleAddVehicle={()=>{
             setModalPilih(false);
             setModalTambahKendaraan(true);
           }}
+          vehicleList={kendaraan}
         />
       </Modal>
     </section>

@@ -24,9 +24,9 @@ export default function Select(props) {
         <label htmlFor={label}>{label}</label>
       )}
       <select
+        {...register(name)}
         name={name}
         onChange={onChange}
-        {...register(name)}
         {...inputProps}
         disabled={disabled}
       >

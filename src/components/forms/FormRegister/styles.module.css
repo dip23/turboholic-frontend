@@ -8,5 +8,5 @@
 
 .loginButton {
   margin-top: 1.5rem;
-  background-color: var(--blue);
+  background-color: var(--blue) !important;
 }

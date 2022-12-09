@@ -1,22 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
+import vehicle from '../../../api/Vehicle';
 import Button from '../../elements/Button';
 import Select from '../../fields/Select';
 import Text from '../../fields/Text';
 import style from './styles.module.css';
 // import { yupResolver } from '@hookform/resolvers/yup';
 
-export default function FormKendaraan({
-  handleSubmitForm,
-  isLoading,
-}) {
-
+export default function FormKendaraan({handleSubmitForm, isLoading,}) {
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm();
 
+  const [engineType, setEngineType] = useState([]);
+  const [fuelType, setFuelType] = useState([]);
+  const [selectEngine, setSelectEngine] = useState(1);
+
+  const engineData = async () => {
+    const res = await vehicle.getAllEngine();
+    setEngineType(res.data.content.engineType);
+  };
+
+  const fuelData = async (id) => {
+    const res = await vehicle.getFuelById(id);
+    setFuelType(res.data.content.fuelType);
+  }
+
+  useEffect(() => {
+    engineData()
+  }, []);
+
+  useEffect(() => {
+    fuelData(selectEngine)
+  }, [selectEngine])
+  
   const inputProps = [
     {type: "text", placeholder: "D1231XX"},
     {type: "text", placeholder: "Avanza"},
@@ -33,17 +52,9 @@ export default function FormKendaraan({
     disabled: isLoading
   };
 
-  const engineType = [
-    {id: 1, engine_type: "Bensin"},
-    {id: 1, engine_type: "Diesel"},
-  ];
-
-  const fuelType = [
-    {id: 1, fuel_type: "Pertamax"},
-    {id: 2, fuel_type: "Pertamax Turbo"},
-    {id: 3, fuel_type: "Pertalite"},
-    {id: 4, fuel_type: "Dexlite"},
-  ];
+  const onChangeEngine = (e) => {
+    setSelectEngine(e.target.value);
+  };
 
   return (
     <form onSubmit={handleSubmit(handleSubmitForm)} className={style.root}>
@@ -68,7 +79,8 @@ export default function FormKendaraan({
         register={register}
         error={errors?.engineType?.message}
         options={engineType}
-        displayValue={"engine_type"}
+        displayValue={"name"}
+        onChange={onChangeEngine}
       />
       <Select
         label="Jenis BBM"
@@ -77,7 +89,7 @@ export default function FormKendaraan({
         register={register}
         error={errors?.fuelType?.message}
         options={fuelType}
-        displayValue={"fuel_type"}
+        displayValue={"name"}
       />
       <div className={style.fuelGroup}>
         <Text
