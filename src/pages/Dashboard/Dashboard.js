@@ -10,9 +10,9 @@ import ListKendaraan from '../../components/fragments/ListKendaraan';
 import { UserContext } from '../../context/UserContext';
 import vehicle from '../../api/Vehicle';
 import Alert from '../../components/elements/Alert';
-import axios from 'axios';
 import CardHemat from '../../components/fragments/CardHemat';
 import CardSummary from '../../components/fragments/CardSummary';
+import Chart from '../../components/fragments/Chart';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -23,8 +23,7 @@ export default function Dashboard() {
   const [alertMessage, setAlertMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState({});
-
-  console.log(user);
+  const [modalMaintenance, setModalMaintenance] = useState(false);
   
   const fetchData = async () => {
     const res = await vehicle.getAllVehicle({
@@ -107,9 +106,10 @@ export default function Dashboard() {
         <FontAwesomeIcon onClick={logout} icon={faSignOut}/>
       </div>
       <CardHemat/>
+      <Chart engineId={selectedVehicle?.engineTypeId}/>
       <CardSummary/>
-      <Button>Update Data Pengisian</Button>
-      <Button>Update Tanggal Service</Button>
+      <Button onClick={()=>setModalMaintenance(true)}>Update Data Pengisian</Button>
+      <Button onClick={()=>setModalMaintenance(true)}>Update Tanggal Service</Button>
       <Modal
         show={modalTambahKendaraan} 
         title="Tambah Kendaraan"
@@ -131,6 +131,15 @@ export default function Dashboard() {
           }}
           vehicleList={kendaraan}
         />
+      </Modal>
+      <Modal
+        show={modalMaintenance}
+        title="Coming Soon"
+        onClose={()=>setModalMaintenance(false)}
+      >
+        <div className={style.modalMaintenance}>
+          <img alt='maintenance' src={process.env.PUBLIC_URL + `/img/Robot.png`}/>
+        </div>
       </Modal>
     </section>
   )

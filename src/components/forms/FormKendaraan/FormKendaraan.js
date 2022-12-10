@@ -6,14 +6,15 @@ import Button from '../../elements/Button';
 import Select from '../../fields/Select';
 import Text from '../../fields/Text';
 import style from './styles.module.css';
-// import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { kendaraanSchema } from './validation';
 
 export default function FormKendaraan({handleSubmitForm, isLoading,}) {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm();
+  } = useForm({ resolver: yupResolver(kendaraanSchema) });
 
   const { user } = useContext(UserContext);
 
@@ -57,7 +58,7 @@ export default function FormKendaraan({handleSubmitForm, isLoading,}) {
   }
 
   const inputProps = [
-    {type: "text", placeholder: "D1231XX"},
+    {type: "text", placeholder: "D1231XX", maxLength: 11},
     {type: "text", placeholder: "Avanza"},
     {type: "text", placeholder: "Diesel"},
     {type: "text", placeholder: "Pertamax"},

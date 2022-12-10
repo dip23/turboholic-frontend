@@ -1,0 +1,11 @@
+.root {
+  background-color: var(--white);
+  padding: 1rem 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.root > div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}

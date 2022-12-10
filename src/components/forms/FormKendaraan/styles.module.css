@@ -2,7 +2,9 @@
   margin-bottom: 1rem;
 }
 
-.root > div label {
+.root > div label,
+.root > div > p,
+.root > div > div > p {
   font-size: 0.75rem;
 }
 

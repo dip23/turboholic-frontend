@@ -45,4 +45,8 @@ export default function Select(props) {
       )}
     </div>
   )
-}
+};
+
+Select.defaultProps = {
+  register: () => { }
+};

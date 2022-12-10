@@ -30,3 +30,7 @@ export default function Text(props) {
     </div>
   )
 }
+
+Text.defaultProps = {
+  register: ()=>{}
+}
