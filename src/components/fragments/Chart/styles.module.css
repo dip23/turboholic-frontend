@@ -8,4 +8,9 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.root > div > div {
+  width: 100%;
 }

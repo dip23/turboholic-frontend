@@ -70,6 +70,8 @@ export default function Chart({ engineId }) {
     },
   };
 
+  const defaultDate = new Date().toISOString().substring(0,10);
+
   return (
     <div className={style.root}>
       <div>
@@ -80,7 +82,7 @@ export default function Chart({ engineId }) {
         />
         <Text
           name="date"
-          inputProps={{type: "date"}}
+          inputProps={{type: "date", defaultValue: defaultDate}}
         />
       </div>
       <Line options={options} data={data} />
