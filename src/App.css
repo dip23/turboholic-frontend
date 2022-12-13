@@ -21,3 +21,9 @@
 
   font-size: calc(100vw * 16 / 390);
 }
+
+@media only screen and (min-device-width: 600px) and (max-device-width: 2560px) {
+  :root {
+    font-size: calc(100vw * 16 / 2560) !important;
+  }
+}

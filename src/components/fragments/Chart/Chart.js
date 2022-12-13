@@ -16,9 +16,16 @@ import { UserContext } from '../../../context/UserContext';
 import Select from '../../fields/Select';
 import Text from '../../fields/Text';
 
-export default function Chart({ engineId }) {
+export default function Chart({ dataChart, engineId, vehicleId, fuelId, handleChangeFuel }) {
   const { user } = useContext(UserContext);
   const [fuelType, setFuelType] = useState([]);
+  const [date, setDate] = useState([]);
+  const [valueConsumption, setValueConsumption] = useState([]);
+  const [value, setValue] = useState({
+    fuelId: '',
+    startDate: '',
+    endDate: ''
+  });
 
   ChartJS.register(
     CategoryScale,
@@ -40,17 +47,40 @@ export default function Chart({ engineId }) {
   }
 
   useEffect(() => {
-    fuelData(engineId || 1)
-  }, [engineId])
+    if(engineId){
+      fuelData(engineId)
+    }
+  }, [engineId]);
 
-  const labels = ['1 Nov', '10 Nov', '20 Nov', '31 Nov'];
+  useEffect(() => {
+    let dateData = [];
+    let valueConsumptionDate = [];
+    
+    dataChart && dataChart.forEach(item => {
+      dateData.push(item.date);
+      valueConsumptionDate.push(item.total);
+    })
+    
+    setDate(dateData);
+    setValueConsumption(valueConsumptionDate);
+  }, [dataChart])
+
+  useEffect(() => {
+    setValue({
+      ...value,
+      fuelId: fuelId
+    })
+  }, [vehicleId])
+  
+
+  const labels = date;
 
   const data = {
     labels,
     datasets: [
       {
         label: 'Km/L',
-        data: [25, 30, 34, 50],
+        data: valueConsumption,
         borderColor: '#A41623',
         backgroundColor: '#A41623',
       }
@@ -72,6 +102,14 @@ export default function Chart({ engineId }) {
 
   const defaultDate = new Date().toISOString().substring(0,10);
 
+  const changeDate = (e) => {
+    setValue({
+      ...value,
+      fuelId: e.target.value
+    })
+    handleChangeFuel(e.target.value)
+  };
+
   return (
     <div className={style.root}>
       <div>
@@ -79,6 +117,8 @@ export default function Chart({ engineId }) {
           name="fuelType"
           options={fuelType}
           displayValue={"name"}
+          selected={value.fuelId || fuelId}
+          onChange={changeDate}
         />
         <Text
           name="date"

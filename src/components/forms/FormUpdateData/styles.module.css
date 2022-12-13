@@ -1,0 +1,28 @@
+
+.root > div > label,
+.root > div > div > label {
+  font-size: 0.75rem;
+}
+
+.root > .formGroup {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.root > .formGroup > .smallInput > div > input {
+  width: 3rem;
+}
+
+.root > div {
+  margin-bottom: 1rem;
+}
+
+.submitButton {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  background-color: #27AE60;
+  font-size: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}

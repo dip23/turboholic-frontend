@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faSignOut, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import style from './styles.module.css';
 import Button from '../../components/elements/Button';
@@ -13,6 +13,8 @@ import Alert from '../../components/elements/Alert';
 import CardHemat from '../../components/fragments/CardHemat';
 import CardSummary from '../../components/fragments/CardSummary';
 import Chart from '../../components/fragments/Chart';
+import FormUpdateData from '../../components/forms/FormUpdateData';
+import dashboard from '../../api/Dashboard';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -24,6 +26,8 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState({});
   const [modalMaintenance, setModalMaintenance] = useState(false);
+  const [updateData, setUpdateData] = useState(false);
+  const [dataDashboard, setDataDashboard] = useState({});
   
   const fetchData = async () => {
     const res = await vehicle.getAllVehicle({
@@ -34,9 +38,34 @@ export default function Dashboard() {
     setKendaraan(res.data.content.vehicles)
   }
 
+  const fetchUpdate = async (fuelId) => {
+    const res = await dashboard.getFuelUpdate(
+      selectedVehicle?.id || kendaraan[0]?.id,
+      fuelId || selectedVehicle?.initialFuelTypeId || kendaraan[0]?.initialFuelTypeId,
+      {
+        headers: {
+          Authorization: `Bearer ${user?.token}`
+        }
+    });
+    setDataDashboard(res.data.content);
+  }
+
   useEffect(() => {
     fetchData();
   }, [])
+  
+  useEffect(() => {
+    if(kendaraan[0]){
+      fetchUpdate();
+    }
+  }, [kendaraan, selectedVehicle])
+
+  const {
+    chartData,
+    currentFuelUsage,
+    totalDistance,
+    fuelSavingsData
+  } = dataDashboard;
 
   const clearStorage = () => {
     return localStorage.removeItem('user');
@@ -82,8 +111,20 @@ export default function Dashboard() {
 
   const choosedVehicle = (e) =>{
     setSelectedVehicle(e);
+    fetchUpdate();
     setModalPilih(false)
   }
+
+  const submitUpdate = (data) => {
+    setUpdateData(false);
+  }
+
+  const changeFuel = (e) => {
+    console.log(e)
+    fetchUpdate(e);
+  };
+
+  console.log(chartData);
 
   return (
     <section className={style.root}>
@@ -105,10 +146,25 @@ export default function Dashboard() {
         </div>
         <FontAwesomeIcon onClick={logout} icon={faSignOut}/>
       </div>
-      <CardHemat/>
-      <Chart engineId={selectedVehicle?.engineTypeId}/>
-      <CardSummary/>
-      <Button onClick={()=>setModalMaintenance(true)}>Update Data Pengisian</Button>
+      <CardHemat fuelSavingData={fuelSavingsData}/>
+      <Chart 
+        dataChart={chartData}
+        engineId={selectedVehicle?.engineTypeId || kendaraan[0]?.engineTypeId}
+        vehicleId={selectedVehicle?.id || kendaraan[0]?.id}
+        fuelId={selectedVehicle?.initialFuelTypeId || kendaraan[0]?.initialFuelTypeId}
+        handleChangeFuel={changeFuel}
+      />
+      <CardSummary currentFuelUsage={currentFuelUsage} totalDistance={totalDistance} />
+      <Button onClick={()=>setUpdateData(!updateData)}>
+        <p>Update Data Pengisian</p>
+        <FontAwesomeIcon icon={updateData ? faCaretUp : faCaretDown}/>
+      </Button>
+      {updateData && (
+        <FormUpdateData
+          handleSubmitForm={submitUpdate}
+          engineId={selectedVehicle?.engineTypeId || kendaraan[0]?.engineTypeId}
+        />
+      )}
       <Button onClick={()=>setModalMaintenance(true)}>Update Tanggal Service</Button>
       <Modal
         show={modalTambahKendaraan} 

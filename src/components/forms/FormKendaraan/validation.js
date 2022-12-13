@@ -6,5 +6,4 @@ export const kendaraanSchema = yup.object().shape({
   tankCapacity: yup.string().required('Wajib diisi'),
   barTotal: yup.string().required('Wajib diisi'),
   initialBar: yup.string().required('Wajib diisi'),
-  initialOdo: yup.string().required('Wajib diisi'),
 })
