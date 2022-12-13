@@ -22,8 +22,9 @@ export default function FormUpdateData({
   } = useForm();
 
   const [fuelType, setFuelType] = useState([]);
+  const [selectedFuelType, setSelectedFuelType] = useState({});
   const [value, setValue] = useState({
-    fuelAmount: addCommas(13900),
+    fuelAmount: addCommas(selectedFuelType?.price || 0),
     odoNum: ''
   });
   const { user } = useContext(UserContext);
@@ -53,7 +54,7 @@ export default function FormUpdateData({
   const convertRupiah = (e) => {
     setValue({
       ...value,
-      fuelAmount: addCommas(e.target.value * 13900)
+      fuelAmount: addCommas(e.target.value * selectedFuelType)
     })
   }
 
@@ -69,6 +70,11 @@ export default function FormUpdateData({
     disabled: isLoading
   };
 
+  const changeFuelType = (e) => {
+    const val = fuelType.find(item => item.id === Number(e.target.value))
+    setSelectedFuelType(val.price);
+  }
+
   return (
     <form onSubmit={handleSubmit(handleSubmitForm)} className={style.root}>
       <Select
@@ -78,6 +84,7 @@ export default function FormUpdateData({
         error={errors?.fuelType?.message}
         options={fuelType}
         displayValue={"name"}
+        onChange={changeFuelType}
       />
       <div className={style.formGroup}>
         <Text

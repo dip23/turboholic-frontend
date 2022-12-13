@@ -12,15 +12,15 @@ export default function CardSummary(props) {
       <div>
         <p>Konsumsi BBM</p>
         <div>
-          <p>{currentFuelUsage || '-'}</p>
+          <p>{Math.round(currentFuelUsage) || '-'}</p>
           <p>Km/L</p>
         </div>
       </div>
       <div>
         <p>Total Jarak</p>
         <div>
-          <p>{totalDistance || '-'}</p>
-          <p>Km/L</p>
+          <p>{Math.round(totalDistance) || '-'}</p>
+          <p>Km</p>
         </div>
       </div>
     </div>

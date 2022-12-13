@@ -4,13 +4,42 @@
   border-radius: 0.5rem;
 }
 
-.root > div {
+.root > div:first-of-type {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
   gap: 1rem;
 }
 
-.root > div > div {
+.root > div:first-of-type > div {
   width: 100%;
+}
+
+.root > .modalDate > div {
+  width: fit-content;
+}
+
+.dateForm > div {
+  display: flex;
+  gap: 1rem;
+}
+
+.dateForm > div > div > label {
+  font-size: 0.75rem;
+}
+
+.dateForm > button {
+  margin-top: 1rem;
+  background-color: var(--blue);
+  font-size: 0.75rem;
+}
+
+.root > div:first-child > button {
+  padding: 0;
+  font-size: 0.75rem;
+  background-color: transparent;
+  border: 1px solid #c9c9c9;
+  color: var(--black-default);
+  font-weight: 400;
+  border-radius: 5px;
 }

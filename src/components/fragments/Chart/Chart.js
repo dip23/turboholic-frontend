@@ -15,8 +15,19 @@ import vehicle from '../../../api/Vehicle';
 import { UserContext } from '../../../context/UserContext';
 import Select from '../../fields/Select';
 import Text from '../../fields/Text';
+import Modal from '../../elements/Modal';
+import Button from '../../elements/Button';
 
-export default function Chart({ dataChart, engineId, vehicleId, fuelId, handleChangeFuel }) {
+export default function Chart(props) {
+  const {
+    dataChart,
+    engineId,
+    vehicleId,
+    fuelId,
+    handleChangeFuel,
+    handleChangeDate
+  } = props;
+
   const { user } = useContext(UserContext);
   const [fuelType, setFuelType] = useState([]);
   const [date, setDate] = useState([]);
@@ -26,6 +37,7 @@ export default function Chart({ dataChart, engineId, vehicleId, fuelId, handleCh
     startDate: '',
     endDate: ''
   });
+  const [modalDate, setModalDate] = useState(false);
 
   ChartJS.register(
     CategoryScale,
@@ -100,14 +112,32 @@ export default function Chart({ dataChart, engineId, vehicleId, fuelId, handleCh
     },
   };
 
-  const defaultDate = new Date().toISOString().substring(0,10);
-
-  const changeDate = (e) => {
+  const changeFuel = (e) => {
     setValue({
       ...value,
       fuelId: e.target.value
     })
     handleChangeFuel(e.target.value)
+  };
+
+  const now = new Date();
+
+  const optionFirst = { day: 'numeric', month: 'short' };
+  const optionSecond = { day: 'numeric', month: 'short', year: 'numeric' };
+
+  const firsDate = new Date(now.getFullYear(), now.getMonth(), 1).toLocaleDateString("id-ID", optionFirst);
+  
+  const today = new Date().toLocaleDateString("id-ID", optionSecond);
+
+  const changeDate = (e) => {
+    e.preventDefault();
+    handleChangeDate(e.target[0].value, e.target[1].value);
+    setValue({
+      ...value,
+      startDate: new Date(e.target[0].value).toLocaleDateString("id-ID", optionFirst),
+      endDate: new Date(e.target[1].value).toLocaleDateString("id-ID", optionSecond),
+    });
+    setModalDate(false);
   };
 
   return (
@@ -118,14 +148,42 @@ export default function Chart({ dataChart, engineId, vehicleId, fuelId, handleCh
           options={fuelType}
           displayValue={"name"}
           selected={value.fuelId || fuelId}
-          onChange={changeDate}
+          onChange={changeFuel}
         />
-        <Text
-          name="date"
-          inputProps={{type: "date", defaultValue: defaultDate}}
-        />
+        <Button onClick={() => setModalDate(true)}>
+          {value?.startDate || firsDate} - {value?.endDate || today}
+        </Button>
       </div>
       <Line options={options} data={data} />
+      <Modal
+        show={modalDate}
+        title={"Pilih Tanggal"}
+        onClose={()=>setModalDate(false)}
+        className={style.modalDate}
+      >
+        <form className={style.dateForm} onSubmit={changeDate}>
+          <div>
+            <Text
+              label="Dari"
+              name="startDate"
+              inputProps={{type: "date", placeholder: "DD/MM/YYYY"}}
+            />
+            <Text
+              label="Sampai"
+              name="endDate"
+              inputProps={{type: "date", placeholder: "DD/MM/YYYY"}}
+            />
+          </div>
+          <Button
+            buttonProps={{type: "submit"}}
+          >Atur Tanggal</Button>
+        </form>
+      </Modal>
     </div>
   )
+}
+
+Chart.defaultProps = {
+  handleChangeFuel: ()=>{},
+  handleChangeDate: ()=>{}
 }

@@ -28,6 +28,10 @@ export default function Dashboard() {
   const [modalMaintenance, setModalMaintenance] = useState(false);
   const [updateData, setUpdateData] = useState(false);
   const [dataDashboard, setDataDashboard] = useState({});
+  const [dateFilter, setDateFilter] = useState({
+    startDate: '',
+    endDate: ''
+  });
   
   const fetchData = async () => {
     const res = await vehicle.getAllVehicle({
@@ -38,10 +42,15 @@ export default function Dashboard() {
     setKendaraan(res.data.content.vehicles)
   }
 
+  const now = new Date();
+  const firsDate = new Date(now.getFullYear(), now.getMonth(), 1);
+
   const fetchUpdate = async (fuelId) => {
     const res = await dashboard.getFuelUpdate(
       selectedVehicle?.id || kendaraan[0]?.id,
       fuelId || selectedVehicle?.initialFuelTypeId || kendaraan[0]?.initialFuelTypeId,
+      dateFilter?.startDate || firsDate,
+      dateFilter?.endDate || now,
       {
         headers: {
           Authorization: `Bearer ${user?.token}`
@@ -58,7 +67,7 @@ export default function Dashboard() {
     if(kendaraan[0]){
       fetchUpdate();
     }
-  }, [kendaraan, selectedVehicle])
+  }, [kendaraan, selectedVehicle, dateFilter])
 
   const {
     chartData,
@@ -109,22 +118,56 @@ export default function Dashboard() {
     }
   };
 
+  const submitUpdate = async (data) => {
+    const dataOdo = Number(data?.odoNum.replace('.',''));
+    console.log(typeof dataOdo);
+    const params = new URLSearchParams();
+    params.append('vehicleId', selectedVehicle?.id || kendaraan[0]?.id);
+    params.append('fuelTypeId', data?.fuelType);
+    params.append('fuelGaugeBefore', data?.startGauge);
+    params.append('fuelGaugeAfter', data?.newGauge);
+    params.append('refuelAmount', data?.fuelAmount);
+    params.append('refuelDate', data?.buyDate);
+    params.append('currentOdometer', dataOdo);
+
+    try {
+      setLoading(true);
+      const res = await dashboard.addFuel(params, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${user?.token}`
+        }
+      });
+      if(res.status === 200){
+        setUpdateData(false);
+        setLoading(false);
+        fetchUpdate();
+      }
+    } catch (error) {
+      if(error.response.status === 401){
+        setAlertMessage('Periksa kembali data anda.')
+      }
+      setLoading(false)
+    }
+  }
+
   const choosedVehicle = (e) =>{
     setSelectedVehicle(e);
     fetchUpdate();
     setModalPilih(false)
   }
 
-  const submitUpdate = (data) => {
-    setUpdateData(false);
-  }
 
   const changeFuel = (e) => {
-    console.log(e)
     fetchUpdate(e);
   };
 
-  console.log(chartData);
+  const changeDate = (startDate, endDate) => {
+    setDateFilter({
+      startDate,
+      endDate
+    })
+  };
 
   return (
     <section className={style.root}>
@@ -153,6 +196,7 @@ export default function Dashboard() {
         vehicleId={selectedVehicle?.id || kendaraan[0]?.id}
         fuelId={selectedVehicle?.initialFuelTypeId || kendaraan[0]?.initialFuelTypeId}
         handleChangeFuel={changeFuel}
+        handleChangeDate={changeDate}
       />
       <CardSummary currentFuelUsage={currentFuelUsage} totalDistance={totalDistance} />
       <Button onClick={()=>setUpdateData(!updateData)}>
@@ -163,6 +207,7 @@ export default function Dashboard() {
         <FormUpdateData
           handleSubmitForm={submitUpdate}
           engineId={selectedVehicle?.engineTypeId || kendaraan[0]?.engineTypeId}
+          isLoading={loading}
         />
       )}
       <Button onClick={()=>setModalMaintenance(true)}>Update Tanggal Service</Button>
