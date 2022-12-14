@@ -16,7 +16,7 @@
 }
 
 .root > .modalDate > div {
-  width: fit-content;
+  width: max-content;
 }
 
 .dateForm > div {

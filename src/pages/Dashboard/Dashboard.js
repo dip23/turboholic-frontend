@@ -73,7 +73,8 @@ export default function Dashboard() {
     chartData,
     currentFuelUsage,
     totalDistance,
-    fuelSavingsData
+    fuelSavingsData,
+    fuelPrice
   } = dataDashboard;
 
   const clearStorage = () => {
@@ -144,7 +145,7 @@ export default function Dashboard() {
         fetchUpdate();
       }
     } catch (error) {
-      if(error.response.status === 401){
+      if(error.response.status === 401 || error.response.status === 400){
         setAlertMessage('Periksa kembali data anda.')
       }
       setLoading(false)
@@ -189,7 +190,7 @@ export default function Dashboard() {
         </div>
         <FontAwesomeIcon onClick={logout} icon={faSignOut}/>
       </div>
-      <CardHemat fuelSavingData={fuelSavingsData}/>
+      <CardHemat fuelSavingData={fuelSavingsData} fuelPrice={fuelPrice}/>
       <Chart 
         dataChart={chartData}
         engineId={selectedVehicle?.engineTypeId || kendaraan[0]?.engineTypeId}

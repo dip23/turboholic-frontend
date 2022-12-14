@@ -17,11 +17,17 @@
   align-items: flex-end;
 }
 
-.root > div > p {
+.root > div > p:first-of-type {
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 2.5rem;
   color: var(--black-default);
+  width: max-content;
+}
+
+.root > div > p:last-of-type {
+  font-size: 0.625rem;
+  line-height: 0.625rem;
 }
 
 .root > div > div > p:first-of-type{

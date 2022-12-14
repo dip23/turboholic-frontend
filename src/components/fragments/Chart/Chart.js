@@ -58,6 +58,11 @@ export default function Chart(props) {
     setFuelType(res.data.content.fuelType);
   }
 
+  // useEffect(() => {
+  //   let allData = {name: 'Semua Tipe', id: ''};
+  //   fuelType.push(allData);
+  // }, [fuelType])
+
   useEffect(() => {
     if(engineId){
       fuelData(engineId)
@@ -128,6 +133,7 @@ export default function Chart(props) {
   const firsDate = new Date(now.getFullYear(), now.getMonth(), 1).toLocaleDateString("id-ID", optionFirst);
   
   const today = new Date().toLocaleDateString("id-ID", optionSecond);
+  const defaultDate = new Date().toISOString().split('T')[0]
 
   const changeDate = (e) => {
     e.preventDefault();
@@ -166,12 +172,12 @@ export default function Chart(props) {
             <Text
               label="Dari"
               name="startDate"
-              inputProps={{type: "date", placeholder: "DD/MM/YYYY"}}
+              inputProps={{type: "date", placeholder: "DD/MM/YYYY", defaultValue: defaultDate}}
             />
             <Text
               label="Sampai"
               name="endDate"
-              inputProps={{type: "date", placeholder: "DD/MM/YYYY"}}
+              inputProps={{type: "date", placeholder: "DD/MM/YYYY", defaultValue: defaultDate}}
             />
           </div>
           <Button
