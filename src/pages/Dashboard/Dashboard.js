@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOut, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { faSignOut, faCaretDown, faCaretUp, faL } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import style from './styles.module.css';
 import Button from '../../components/elements/Button';
@@ -15,6 +15,7 @@ import CardSummary from '../../components/fragments/CardSummary';
 import Chart from '../../components/fragments/Chart';
 import FormUpdateData from '../../components/forms/FormUpdateData';
 import dashboard from '../../api/Dashboard';
+import CompareFuel from '../../components/fragments/CompareFuel';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState({});
   const [modalMaintenance, setModalMaintenance] = useState(false);
+  const [modalCompare, setModalCompare] = useState(false);
   const [updateData, setUpdateData] = useState(false);
   const [dataDashboard, setDataDashboard] = useState({});
   const [dateFilter, setDateFilter] = useState({
@@ -199,8 +201,9 @@ export default function Dashboard() {
         handleChangeFuel={changeFuel}
         handleChangeDate={changeDate}
       />
+      <Button className={style.buttonCompare} onClick={()=>setModalCompare(true)}>Bandingkan BBM</Button>
       <CardSummary currentFuelUsage={currentFuelUsage} totalDistance={totalDistance} />
-      <Button onClick={()=>setUpdateData(!updateData)}>
+      <Button className={style.buttonUpdate} onClick={()=>setUpdateData(!updateData)}>
         <p>Update Data Pengisian</p>
         <FontAwesomeIcon icon={updateData ? faCaretUp : faCaretDown}/>
       </Button>
@@ -242,6 +245,13 @@ export default function Dashboard() {
         <div className={style.modalMaintenance}>
           <img alt='maintenance' src={process.env.PUBLIC_URL + `/img/Robot.png`}/>
         </div>
+      </Modal>
+      <Modal
+        show={modalCompare}
+        title="Bandingkan BBM"
+        onClose={()=>setModalCompare(false)}
+      >
+        <CompareFuel/>
       </Modal>
     </section>
   )

@@ -1,0 +1,62 @@
+.root {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.root > div {
+  width: 100%;
+}
+
+.root > div > .coloredBox {
+  text-align: center;
+  padding: 1.5rem 0.5rem;
+  border-radius: 0.3125rem;
+  margin-bottom: 1rem;
+}
+
+.root > div > .coloredBox > img {
+  width: 100%;
+}
+
+.root > div:first-of-type > .coloredBox,
+.root > div:first-of-type > .itemCompare > div {
+  background-color: #2E5EAA1A;  
+}
+
+.root > div:last-of-type > .coloredBox,
+.root > div:last-of-type > .itemCompare > div {
+  background-color: #A416231A;
+}
+
+.root > div > .itemCompare:not(:nth-child(4)) {
+  margin-bottom: 1rem;
+}
+
+.root > div > div:last-child {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.root > div > div:last-child > p {
+  font-size: 1rem;
+  color: #58BC74;
+  font-weight: 700;
+}
+
+.itemCompare > p {
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.itemCompare > div {
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 0.3125rem;
+}
+
+.itemCompare > div > p {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
