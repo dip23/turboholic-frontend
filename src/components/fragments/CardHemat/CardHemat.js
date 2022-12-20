@@ -7,13 +7,19 @@ export default function CardHemat({ fuelSavingData, fuelPrice }) {
     <div className={style.root}>
       <p>Anda Sudah Menghemat</p>
       <div>
-        <p>{Math.abs(fuelSavingData?.fuelSavingsLiter) || '0'} L</p>
+        <p>{fuelSavingData?.fuelSavingsLiter || '0'} L</p>
         <div>
           <p>Senilai</p>
-          <p>Rp{addCommas(Math.abs(fuelSavingData?.fuelSavingRupiah) || 0)}</p>
+          <p>Rp{addCommas(fuelSavingData?.fuelSavingRupiah || 0)}</p>
         </div>
         <p>*Harga: Rp{addCommas(fuelPrice || 0)}</p>
       </div>
+      {fuelSavingData?.fuelSavingsLiter < 0 && (
+        <p>Penggunaan BBM anda 
+          kurang efisien, simak artikel 
+          <a href='https://mypertamina.id/cara-hemat-bbm-dalam-penggunaan-seharihari' target={'_blank'} rel="noreferrer"> berikut</a>
+        </p>
+      )}
     </div>
   )
 }

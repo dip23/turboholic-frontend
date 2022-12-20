@@ -3,9 +3,9 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import style from './styles.module.css';
+import { dataProduct } from './productData';
 
 export default function SectionProduct() {
-  const image = ['patraniaga', 'pertamax', 'pertamaxturbo', 'dexlite', 'dex'];
 
   const settings = {
     infinite: true,
@@ -19,12 +19,18 @@ export default function SectionProduct() {
     <section className={style.root}>
       <h1>Our Product</h1>
       <Slider {...settings}>
-        {image && image.map((el, idx) => (
+        {dataProduct && dataProduct.map((el, idx) => (
           <div className={style.logo} key={idx}>
-            <img alt='logo' src={process.env.PUBLIC_URL + `/img/logo-${el}.svg`}/>
+            <img alt='logo' src={process.env.PUBLIC_URL + `/img/logo-${el.image}.svg`}/>
+            <p>{el.name}</p>
+            <p>{el.desc}</p>
           </div>
         ))}
       </Slider>
+      <div>
+        <img alt='pertamina' src={process.env.PUBLIC_URL + `/img/logo-pertamina.svg`}/>
+        <img alt='patraniaga' src={process.env.PUBLIC_URL + `/img/logo-patraniaga.svg`}/>
+      </div>
     </section>
   )
 }

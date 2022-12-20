@@ -4,11 +4,21 @@
   border-radius: 0.5rem;
 }
 
-.root > p {
+.root > p:first-of-type {
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
   color: var(--black-default);
+}
+
+.root > p:nth-of-type(2) {
+  margin-top: 1rem;
+  font-size: 0.625rem;
+  color: var(--red);
+}
+
+.root > p:last-of-type > a {
+  text-decoration: none;
 }
 
 .root > div{

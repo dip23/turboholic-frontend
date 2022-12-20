@@ -24,7 +24,7 @@ export default function FormUpdateData({
   const [fuelType, setFuelType] = useState([]);
   const [selectedFuelType, setSelectedFuelType] = useState({});
   const [value, setValue] = useState({
-    fuelAmount: addCommas(selectedFuelType?.price || 0),
+    fuelAmount: 0,
     odoNum: ''
   });
   const { user } = useContext(UserContext);
@@ -36,6 +36,7 @@ export default function FormUpdateData({
       }
     });
     setFuelType(res.data.content.fuelType);
+    setValue({...value, fuelAmount: addCommas(res.data.content.fuelType[0].price)})
   }
 
   useEffect(() => {
@@ -54,7 +55,7 @@ export default function FormUpdateData({
   const convertRupiah = (e) => {
     setValue({
       ...value,
-      fuelAmount: addCommas(e.target.value * selectedFuelType)
+      fuelAmount: addCommas(e.target.value * selectedFuelType?.price)
     })
   }
 
@@ -72,7 +73,8 @@ export default function FormUpdateData({
 
   const changeFuelType = (e) => {
     const val = fuelType.find(item => item.id === Number(e.target.value))
-    setSelectedFuelType(val.price);
+    setValue({...value, fuelAmount: addCommas(val.price)})
+    setSelectedFuelType(val);
   }
 
   return (

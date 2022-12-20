@@ -1,0 +1,31 @@
+.root {
+  padding: 2rem 2rem;
+  background-color: var(--blue);
+  text-align: center;
+}
+
+.root > img {
+  margin-bottom: 1.5rem;
+}
+
+.root > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.root > div > img {
+  width: 9rem;
+  object-fit: cover;
+}
+
+.root > div > div {
+  text-align: left;
+}
+
+.root > div > div > p {
+  text-align: left;
+  color: var(--white);
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+}
