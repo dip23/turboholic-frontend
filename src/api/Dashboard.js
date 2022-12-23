@@ -6,6 +6,9 @@ const dashboard = {
   },
   addFuel(data, config) {
     return Api.post(`/fuel-update/add`, data, config)
+  },
+  getSummary(id, config) {
+    return Api.get(`/fuel-update/summary?vehicleId=${id}`, config)
   }
 };
 

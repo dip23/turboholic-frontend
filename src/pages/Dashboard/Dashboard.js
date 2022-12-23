@@ -201,7 +201,7 @@ export default function Dashboard() {
         handleChangeFuel={changeFuel}
         handleChangeDate={changeDate}
       />
-      <Button className={style.buttonCompare} onClick={()=>setModalCompare(true)}>Bandingkan BBM</Button>
+      {/* <Button className={style.buttonCompare} onClick={()=>setModalCompare(true)}>Bandingkan BBM</Button> */}
       <CardSummary currentFuelUsage={currentFuelUsage} totalDistance={totalDistance} />
       <Button className={style.buttonUpdate} onClick={()=>setUpdateData(!updateData)}>
         <p>Update Data Pengisian</p>
@@ -251,7 +251,7 @@ export default function Dashboard() {
         title="Bandingkan BBM"
         onClose={()=>setModalCompare(false)}
       >
-        <CompareFuel/>
+        <CompareFuel vehicleId={selectedVehicle?.id || kendaraan[0]?.id}/>
       </Modal>
     </section>
   )
