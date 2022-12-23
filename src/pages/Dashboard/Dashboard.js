@@ -93,8 +93,8 @@ export default function Dashboard() {
     const params = new URLSearchParams();
     params.append('licensePlate', data?.plateNum);
     params.append('brand', data?.vehicleBrand);
-    params.append('engineTypeId', data?.engineType);
-    params.append('initialFuelTypeId', data?.fuelType);
+    params.append('engineTypeId', data?.engineType || 1);
+    params.append('initialFuelTypeId', data?.fuelType || 1);
     params.append('maxFuelCapacity', data?.tankCapacity);
     params.append('maxFuelGauge', data?.barTotal);
     params.append('initialFuelGauge', data?.initialBar);
@@ -109,6 +109,7 @@ export default function Dashboard() {
         }
       });
       if(res.status === 200){
+        setAlertMessage('');
         setModalTambahKendaraan(false)
         setLoading(false);
         fetchData();
@@ -116,6 +117,8 @@ export default function Dashboard() {
     } catch (error) {
       if(error.response.status === 401){
         setAlertMessage('Periksa kembali data anda.')
+      }else{
+        setAlertMessage(error.response.data.message)
       }
       setLoading(false)
     }
