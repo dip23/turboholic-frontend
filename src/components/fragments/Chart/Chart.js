@@ -80,7 +80,7 @@ export default function Chart(props) {
     
     setDate(dateData);
     setValueConsumption(valueConsumptionDate);
-  }, [dataChart])
+  }, [dataChart, vehicleId])
 
   useEffect(() => {
     setValue({

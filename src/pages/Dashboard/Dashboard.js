@@ -49,7 +49,7 @@ export default function Dashboard() {
 
   const fetchUpdate = async (fuelId) => {
     const res = await dashboard.getFuelUpdate(
-      selectedVehicle?.id || kendaraan[0]?.id,
+      selectedVehicle.id || kendaraan[0]?.id,
       fuelId || selectedVehicle?.initialFuelTypeId || kendaraan[0]?.initialFuelTypeId,
       dateFilter?.startDate || firsDate,
       dateFilter?.endDate || now,
@@ -64,6 +64,11 @@ export default function Dashboard() {
   useEffect(() => {
     fetchData();
   }, [])
+
+  useEffect(() => {
+    fetchUpdate()
+  }, [selectedVehicle])
+  
   
   useEffect(() => {
     if(kendaraan[0]){
@@ -204,7 +209,7 @@ export default function Dashboard() {
         handleChangeFuel={changeFuel}
         handleChangeDate={changeDate}
       />
-      {/* <Button className={style.buttonCompare} onClick={()=>setModalCompare(true)}>Bandingkan BBM</Button> */}
+      <Button className={style.buttonCompare} onClick={()=>setModalCompare(true)}>Bandingkan BBM</Button>
       <CardSummary currentFuelUsage={currentFuelUsage} totalDistance={totalDistance} />
       <Button className={style.buttonUpdate} onClick={()=>setUpdateData(!updateData)}>
         <p>Update Data Pengisian</p>
@@ -254,7 +259,10 @@ export default function Dashboard() {
         title="Bandingkan BBM"
         onClose={()=>setModalCompare(false)}
       >
-        <CompareFuel vehicleId={selectedVehicle?.id || kendaraan[0]?.id}/>
+        <CompareFuel
+          engineType={selectedVehicle?.engineTypeId || kendaraan[0]?.engineTypeId}
+          vehicleId={selectedVehicle?.id || kendaraan[0]?.id}
+        />
       </Modal>
     </section>
   )

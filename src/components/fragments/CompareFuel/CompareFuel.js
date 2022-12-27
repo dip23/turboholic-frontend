@@ -1,16 +1,29 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import style from './styles.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsUpDown } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '../../../context/UserContext';
 import dashboard from '../../../api/Dashboard';
+import { addCommas } from '../../../utils/normalize';
+import Loader from '../../elements/Loader';
 
 export default function CompareFuel({engineType, vehicleId}) {
+  const [dataCompare, setDataCompare] = useState(null);
+  const [dataImage, setDataImage] = useState([]);
   const { user } = useContext(UserContext);
-  const dummyData = [
-    {image: 'pertamax', bbmConsumption: 14.6, rangeTotal: 100, summary: 100, summaryRupiah: 100000},
-    {image: 'pertamaxturbo', bbmConsumption: 14.6, rangeTotal: 100, summary: 100, summaryRupiah: 100000},
-  ];
+
+  
+  useEffect(() => {
+    let dataFuel = ['pertamaxturbo', 'pertamax'];
+    let dataDiesel = ['dex', 'dexlite'];
+
+    if(engineType === 1){
+      setDataImage(dataDiesel)
+    }else{
+      setDataImage(dataFuel)
+    }
+  }, [engineType])
+  
 
   const fetchData = async () => {
     const res = await dashboard.getSummary(vehicleId, {
@@ -18,7 +31,7 @@ export default function CompareFuel({engineType, vehicleId}) {
         Authorization: `Bearer ${user?.token}`
       }
     });
-    console.log(res)
+    setDataCompare(res.data.content);
   }
 
   useEffect(() => {
@@ -28,20 +41,25 @@ export default function CompareFuel({engineType, vehicleId}) {
 
   return (
     <div className={style.root}>
-      {dummyData && dummyData.map((i,idx)=>(
-        <div key={idx}>
-          <div className={style.coloredBox}>
-            <img alt='logo' src={`/img/logo-${i.image}.svg`} />
-          </div>
-          <CompareItem title={'Konsumsi BBM'} value={`${i.bbmConsumption} Km/L`}/>
-          <CompareItem title={'Total Jarak'} value={`${i.rangeTotal} Km`}/>
-          <CompareItem title={'Penghematan'} value={`${i.summary} Liter`}/>
-          <div>
-            <FontAwesomeIcon icon={faArrowsUpDown} />
-            <p>Rp100.000</p>
-          </div>
-        </div>
-      ))}
+      {dataCompare ? dataCompare?.map((i,idx)=>{
+        if(idx < 2){
+          return (
+            <div className={style.compareCard} key={idx}>
+              <div className={style.coloredBox}>
+                <img alt='logo' src={`/img/logo-${dataImage[idx]}.svg`} />
+              </div>
+              <CompareItem title={'Konsumsi BBM'} value={`${Math.round(i.currentFuelUsage * 100)/100 || 0} Km/L`}/>
+              <CompareItem title={'Total Jarak'} value={`${Math.round(i.totalDistance * 100)/100 || 0} Km`}/>
+              <CompareItem title={'Penghematan'} value={`${Math.round(i.fuelSavingsLiter * 100)/100 || 0} Liter`}/>
+              <div>
+                <FontAwesomeIcon icon={faArrowsUpDown} />
+                <p>Rp{addCommas(i.fuelSavingRupiah || 0)}</p>
+              </div>
+            </div>
+          );
+        }
+        return null
+      }) : (<Loader/>)}
     </div>
   )
 }

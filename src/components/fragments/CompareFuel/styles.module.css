@@ -4,8 +4,12 @@
   justify-content: space-between;
 }
 
-.root > div {
+.root > .compareCard {
   width: 100%;
+}
+
+.root > div:not(.compareCard){
+  margin: auto;
 }
 
 .root > div > .coloredBox {
@@ -21,12 +25,12 @@
 
 .root > div:first-of-type > .coloredBox,
 .root > div:first-of-type > .itemCompare > div {
-  background-color: #2E5EAA1A;  
+  background-color: #A416231A;
 }
 
 .root > div:last-of-type > .coloredBox,
 .root > div:last-of-type > .itemCompare > div {
-  background-color: #A416231A;
+  background-color: #2E5EAA1A;
 }
 
 .root > div > .itemCompare:not(:nth-child(4)) {
