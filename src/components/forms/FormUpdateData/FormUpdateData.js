@@ -8,12 +8,14 @@ import Select from '../../fields/Select';
 import vehicle from '../../../api/Vehicle';
 import { UserContext } from '../../../context/UserContext';
 import { addCommas, removeNonNumeric } from '../../../utils/normalize';
+import Alert from '../../elements/Alert';
 // import { loginSchema } from './validation';
 
 export default function FormUpdateData({
   handleSubmitForm,
   isLoading,
   engineId,
+  alert
 }) {
   const {
     register,
@@ -55,7 +57,7 @@ export default function FormUpdateData({
   const convertRupiah = (e) => {
     setValue({
       ...value,
-      fuelAmount: addCommas(e.target.value * selectedFuelType?.price)
+      fuelAmount: addCommas(e.target.value * (selectedFuelType?.price || fuelType[0]?.price))
     })
   }
 
@@ -79,6 +81,7 @@ export default function FormUpdateData({
 
   return (
     <form onSubmit={handleSubmit(handleSubmitForm)} className={style.root}>
+      {alert && <Alert message={alert}/>}
       <Select
         label="Jenis BBM"
         name="fuelType"
@@ -117,27 +120,20 @@ export default function FormUpdateData({
           error={errors?.fuelAmount?.message}
         />
         <Text
-          label="Tanggal Pembelian"
-          name="buyDate"
-          inputProps={inputProps[2]}
-          register={register}
-          error={errors?.buyDate?.message}
-        />
-        <Text
           label="Angka Odometer"
           name="odoNum"
           inputProps={inputProps[3]}
           register={register}
           error={errors?.odoNum?.message}
         />
-        <Text
-          label="Tanggal Update"
-          name="odoDate"
-          inputProps={inputProps[2]}
-          register={register}
-          error={errors?.odoDate?.message}
-        />
       </div>
+      <Text
+        label="Tanggal Pembelian"
+        name="buyDate"
+        inputProps={inputProps[2]}
+        register={register}
+        error={errors?.buyDate?.message}
+      />
       <Button 
         className={style.submitButton} 
         buttonProps={buttonProps}

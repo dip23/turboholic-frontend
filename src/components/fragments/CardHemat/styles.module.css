@@ -47,5 +47,5 @@
 
 .root > div > div > p:last-of-type {
   font-size: 0.875rem;
-  color: #04B900;
+  color: var(--green);
 }

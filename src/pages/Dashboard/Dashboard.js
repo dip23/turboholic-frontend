@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOut, faCaretDown, faCaretUp, faL } from '@fortawesome/free-solid-svg-icons';
+import { faSignOut, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import style from './styles.module.css';
 import Button from '../../components/elements/Button';
@@ -24,6 +24,7 @@ export default function Dashboard() {
   const [modalPilih, setModalPilih] = useState(false);
   const [kendaraan, setKendaraan] = useState([]);
   const [alertMessage, setAlertMessage] = useState('');
+  const [alertUpdate, setAlertUpdate] = useState('');
   const [loading, setLoading] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState({});
   const [modalMaintenance, setModalMaintenance] = useState(false);
@@ -34,6 +35,8 @@ export default function Dashboard() {
     startDate: '',
     endDate: ''
   });
+
+  const isShowRank = user?.rank && user?.rank < 11;
   
   const fetchData = async () => {
     const res = await vehicle.getAllVehicle({
@@ -66,7 +69,9 @@ export default function Dashboard() {
   }, [])
 
   useEffect(() => {
-    fetchUpdate()
+    if(kendaraan[0]){
+      fetchUpdate()
+    }
   }, [selectedVehicle])
   
   
@@ -131,7 +136,6 @@ export default function Dashboard() {
 
   const submitUpdate = async (data) => {
     const dataOdo = Number(data?.odoNum.replace('.',''));
-    console.log(typeof dataOdo);
     const params = new URLSearchParams();
     params.append('vehicleId', selectedVehicle?.id || kendaraan[0]?.id);
     params.append('fuelTypeId', data?.fuelType);
@@ -156,7 +160,7 @@ export default function Dashboard() {
       }
     } catch (error) {
       if(error.response.status === 401 || error.response.status === 400){
-        setAlertMessage('Periksa kembali data anda.')
+        setAlertUpdate('Periksa kembali data anda.')
       }
       setLoading(false)
     }
@@ -165,7 +169,8 @@ export default function Dashboard() {
   const choosedVehicle = (e) =>{
     setSelectedVehicle(e);
     fetchUpdate();
-    setModalPilih(false)
+    setUpdateData(false);
+    setModalPilih(false);
   }
 
 
@@ -185,6 +190,10 @@ export default function Dashboard() {
       <div className={style.header}>
         <div>
           <p>Hi, {user?.name}!</p>
+          {!isShowRank && 
+            <p>
+              {user?.rank < 4 && <b>Selamat! </b>}
+              Anda saat ini berada di Peringkat <b>{user?.rank}</b></p>}
           {kendaraan?.length !== 0 ? (
             <div className={style.change}>
               <p>{selectedVehicle?.licensePlate || kendaraan[0]?.licensePlate} 
@@ -211,12 +220,16 @@ export default function Dashboard() {
       />
       <Button className={style.buttonCompare} onClick={()=>setModalCompare(true)}>Bandingkan BBM</Button>
       <CardSummary currentFuelUsage={currentFuelUsage} totalDistance={totalDistance} />
-      <Button className={style.buttonUpdate} onClick={()=>setUpdateData(!updateData)}>
+      <Button className={style.buttonUpdate} onClick={()=>{
+        setUpdateData(!updateData)
+        setAlertUpdate('')
+      }}>
         <p>Update Data Pengisian</p>
         <FontAwesomeIcon icon={updateData ? faCaretUp : faCaretDown}/>
       </Button>
       {updateData && (
         <FormUpdateData
+          alert={alertUpdate}
           handleSubmitForm={submitUpdate}
           engineId={selectedVehicle?.engineTypeId || kendaraan[0]?.engineTypeId}
           isLoading={loading}
@@ -226,7 +239,10 @@ export default function Dashboard() {
       <Modal
         show={modalTambahKendaraan} 
         title="Tambah Kendaraan"
-        onClose={()=>setModalTambahKendaraan(false)}
+        onClose={()=>{
+          setAlertMessage('');
+          setModalTambahKendaraan(false)
+        }}
       >
         {alertMessage && <Alert message={alertMessage}/>}
         <FormKendaraan handleSubmitForm={handleAddVehicle} isLoading={loading}/>

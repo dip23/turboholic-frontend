@@ -19,12 +19,10 @@ export default function Login() {
       setLoading(true);
       const res = await auth.login(data);
       if(res.status === 200){
-        console.log(res)
         setUser(res.data.content);
         setLoading(false);
         navigate('/dashboard');
       }
-      console.log(res);
     } catch (error) {
       if(error.response.status === 401){
         setAlertMessage('username dan password tidak sesuai!')
