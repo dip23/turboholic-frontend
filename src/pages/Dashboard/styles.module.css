@@ -76,3 +76,8 @@
 .modalMaintenance > img {
   margin: auto;
 }
+
+.root button:disabled {
+  color: var(--text-grey) !important;
+  background-color: #D9D9D9 !important;
+}

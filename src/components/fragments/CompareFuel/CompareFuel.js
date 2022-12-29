@@ -14,8 +14,8 @@ export default function CompareFuel({engineType, vehicleId}) {
 
   
   useEffect(() => {
-    let dataFuel = ['pertamaxturbo', 'pertamax'];
-    let dataDiesel = ['dex', 'dexlite'];
+    let dataFuel = ['pertamaxturbo', 'pertamax', 'pertalite'];
+    let dataDiesel = ['dex', 'dexlite', 'biosolar'];
 
     if(engineType === 1){
       setDataImage(dataDiesel)
@@ -42,11 +42,10 @@ export default function CompareFuel({engineType, vehicleId}) {
   return (
     <div className={style.root}>
       {dataCompare ? dataCompare?.map((i,idx)=>{
-        if(idx < 2){
           return (
             <div className={style.compareCard} key={idx}>
               <div className={style.coloredBox}>
-                <img alt='logo' src={`/img/logo-${dataImage[idx]}.svg`} />
+                <img alt='logo' src={`/img/logo-${dataImage[idx]}.png`} />
               </div>
               <CompareItem title={'Konsumsi BBM'} value={`${Math.round(i.currentFuelUsage * 100)/100 || 0} Km/L`}/>
               <CompareItem title={'Total Jarak'} value={`${Math.round(i.totalDistance * 100)/100 || 0} Km`}/>
@@ -57,8 +56,6 @@ export default function CompareFuel({engineType, vehicleId}) {
               </div>
             </div>
           );
-        }
-        return null
       }) : (<Loader/>)}
     </div>
   )
