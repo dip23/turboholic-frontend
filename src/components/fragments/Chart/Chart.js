@@ -17,6 +17,7 @@ import Select from '../../fields/Select';
 import Text from '../../fields/Text';
 import Modal from '../../elements/Modal';
 import Button from '../../elements/Button';
+import { formatDate } from '../../../utils/normalize';
 
 export default function Chart(props) {
   const {
@@ -126,22 +127,21 @@ export default function Chart(props) {
   };
 
   const now = new Date();
+  const defaultDate = now.toISOString().split('T')[0];
+  const defaultFirstDate = new Date(now.getFullYear(), now.getMonth(), 2).toISOString().split('T')[0];
 
   const optionFirst = { day: 'numeric', month: 'short' };
   const optionSecond = { day: 'numeric', month: 'short', year: 'numeric' };
-
   const firsDate = new Date(now.getFullYear(), now.getMonth(), 1).toLocaleDateString("id-ID", optionFirst);
-  
-  const today = new Date().toLocaleDateString("id-ID", optionSecond);
-  const defaultDate = new Date().toISOString().split('T')[0]
+  const today = now.toLocaleDateString("id-ID", optionSecond);
 
   const changeDate = (e) => {
     e.preventDefault();
     handleChangeDate(e.target[0].value, e.target[1].value);
     setValue({
       ...value,
-      startDate: new Date(e.target[0].value).toLocaleDateString("id-ID", optionFirst),
-      endDate: new Date(e.target[1].value).toLocaleDateString("id-ID", optionSecond),
+      startDate: e.target[0].value,
+      endDate: e.target[1].value,
     });
     setModalDate(false);
   };
@@ -157,7 +157,7 @@ export default function Chart(props) {
           onChange={changeFuel}
         />
         <Button onClick={() => setModalDate(true)}>
-          {value?.startDate || firsDate} - {value?.endDate || today}
+          {value?.startDate ? formatDate(value.startDate, optionFirst) : firsDate} - {value?.endDate ? formatDate(value.endDate, optionSecond) : today}
         </Button>
       </div>
       <Line options={options} data={data} />
@@ -172,12 +172,12 @@ export default function Chart(props) {
             <Text
               label="Dari"
               name="startDate"
-              inputProps={{type: "date", placeholder: "DD/MM/YYYY", defaultValue: defaultDate}}
+              inputProps={{type: "date", placeholder: "DD/MM/YYYY", defaultValue: value?.startDate || defaultFirstDate}}
             />
             <Text
               label="Sampai"
               name="endDate"
-              inputProps={{type: "date", placeholder: "DD/MM/YYYY", defaultValue: defaultDate}}
+              inputProps={{type: "date", placeholder: "DD/MM/YYYY", defaultValue: value?.endDate || defaultDate}}
             />
           </div>
           <Button

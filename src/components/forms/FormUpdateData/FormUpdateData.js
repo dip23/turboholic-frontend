@@ -61,10 +61,12 @@ export default function FormUpdateData({
     })
   }
 
+  const defaultDate = new Date().toISOString().split('T')[0]
+
   const inputProps = [
     {type: "number", placeholder: "1"},
     {type: "number", placeholder: "11", onChange: convertRupiah},
-    {type: "date", placeholder: "DD/MM/YYY"},
+    {type: "date", placeholder: "DD/MM/YYY", defaultValue: defaultDate},
     {type: "text", placeholder: "100.000", maxLength: 7, value: value?.odoNum, onChange: handleSeparator},
   ];
 
