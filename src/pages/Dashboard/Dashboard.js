@@ -136,9 +136,10 @@ export default function Dashboard() {
 
   const submitUpdate = async (data) => {
     const dataOdo = Number(data?.odoNum.replace('.',''));
+    const defaultFuelType = (selectedVehicle?.engineTypeId || kendaraan[0]?.engineTypeId) === 1 ? 1 : 4;
     const params = new URLSearchParams();
     params.append('vehicleId', selectedVehicle?.id || kendaraan[0]?.id);
-    params.append('fuelTypeId', data?.fuelType);
+    params.append('fuelTypeId', data?.fuelType || defaultFuelType);
     params.append('fuelGaugeBefore', data?.startGauge);
     params.append('fuelGaugeAfter', data?.newGauge);
     params.append('refuelAmount', data?.fuelAmount);
