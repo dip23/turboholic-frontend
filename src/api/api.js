@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://turboholic.adaptable.app";
+const baseURL = "https://api.turboholic.com";
 
 const Api = axios.create({
   baseURL: baseURL,
